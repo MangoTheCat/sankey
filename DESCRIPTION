@@ -1,10 +1,10 @@
 Package: sankey
 Title: Sankey Diagrams
 Version: 1.0.0
-Author: Gabor Csardi
-Maintainer: gcsardi@mango-solutions.com
+Author: Gabor Csardi, January Weiner
+Maintainer: Gabor Csardi <gcsardi@mango-solutions.com>
 Description: Sankey plots illustrate the flow of information or material.
-License: GPL-2
+License: GPL (>= 2)
 LazyData: true
 URL: https://github.com/mangothecat/sankey
 BugReports: https://github.com/mangothecat/sankey/issues
