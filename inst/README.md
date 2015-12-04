@@ -17,6 +17,7 @@ Sankey plots illustrate the flow of information or material.
 
 
 ```r
+devtools::install_github("mangothecat/simplegraph")
 devtools::install_github("mangothecat/sankey")
 ```
 
