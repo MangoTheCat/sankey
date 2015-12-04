@@ -15,6 +15,9 @@ sankey(x, mar = c(0, 5, 0, 5) + 0.2, ...)
 \item{x}{The plot, created via \code{\link{make_sankey}}.}
 
 \item{...}{Additional arguments, ignored currently.}
+
+\item{mar}{Margin of the plot, see \code{mar} in the \code{par}
+manual.}
 }
 \value{
 Nothing.

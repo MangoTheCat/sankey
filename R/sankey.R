@@ -77,6 +77,8 @@ plot.sankey <- function(x, ...) sankey(x, ...)
 #' Draw a sankey plot
 #'
 #' @param x The plot, created via \code{\link{make_sankey}}.
+#' @param mar Margin of the plot, see \code{mar} in the \code{par}
+#'   manual.
 #' @param ... Additional arguments, ignored currently.
 #' @return Nothing.
 #'
