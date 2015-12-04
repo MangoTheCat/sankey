@@ -9,7 +9,7 @@
 \usage{
 \method{plot}{sankey}(x, ...)
 
-sankey(x, ...)
+sankey(x, mar = c(0, 5, 0, 5) + 0.2, ...)
 }
 \arguments{
 \item{x}{The plot, created via \code{\link{make_sankey}}.}

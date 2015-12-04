@@ -23,4 +23,46 @@ A \code{sankey} object that can be plotted via the
 \description{
 Create an object that describes a sankey plot
 }
+\details{
+The node and edges data frames may contain columns that specify
+how the plot is created. All parameters have reasonable default
+values.
+
+Current list of graphical parameters for nodes:
+\itemize{
+  \item \code{col} Node color.
+  \item \code{size} Node size.
+  \item \code{x} Horizontal coordinates of the center of the node.
+  \item \code{y} Vertical coordinates of the center of the node.
+  \item \code{shape} Shape of the node. Possible values:
+    \code{rectangle}, \code{point}, \code{invisible}.
+  \item \code{lty} Lite type, see \code{par}.
+  \item \code{srt} How to rotate the label, see \code{par}.
+  \item \code{textcol} Label color.
+  \item \code{label} Label text. Defaults to node name.
+  \item \code{adjx} Horizontal adjustment of the label. See
+    \code{adj} in the \code{par} manual.
+  \item \code{adjy} Vertical adjustment of the label. See
+    \code{adj} in the \code{par} manual.
+  \item \code{boxw} Width of the node boxes.
+  \item \code{cex} Label size multiplication factor.
+  \item \code{top} Vertical coordinate of the top of the node.
+  \item \code{center} Vertical coordinate of the center of the node.
+  \item \code{bottom} Vertical coordinate of the bottom of the node.
+  \item \code{pos} Position of the text label, see \code{par}.
+  \item \code{textx} Horizontal position of the text label.
+  \item \code{texty} Vertical position of the text label.
+}
+
+Current list of graphical parameters for edges:
+\itemize{
+  \item \code{colorstyle} Whether the to use a solid color (\code{col}),
+    or a \code{gradient} to plot the edges. The color of a gradient
+    edges is between the colors of the nodes.
+  \item \code{curvestyle} Edge style, \code{sin} for sinusoid curves,
+    \code{line} for straight lines.
+  \item \code{col} Edge color, for edges with solid colors.
+  \item \code{weight} Edge weight. Determines the width of the edges.
+}
+}
 

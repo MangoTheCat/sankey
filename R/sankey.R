@@ -1,7 +1,7 @@
 
 #' @importFrom simplegraph vertices edges strength
 
-draw.edges <- function(x, nsteps = 50, boxw = 0.2) {
+draw.edges <- function(x, nsteps = 50) {
   # for each node, we need to to store the position of the current slot, on
   # the right and on the left
 
@@ -11,8 +11,6 @@ draw.edges <- function(x, nsteps = 50, boxw = 0.2) {
   nodes$lpos <- nodes$center - strength(x, mode = "in")  / 2
   nodes$rpos <- nodes$center - strength(x, mode = "out") / 2
 
-  disp <- c(invisible = 0, point = 0, rectangle = boxw / 2)
-
   for (i in seq_len(nrow(edges))) {
 
     n1 <- edges$from[i]
@@ -21,8 +19,8 @@ draw.edges <- function(x, nsteps = 50, boxw = 0.2) {
     sel <- function(node, attr) nodes[ nodes[,1] == node, attr]
 
     curveseg(
-      sel(n1, "x") + disp[sel(n1, "shape")],
-      sel(n2, "x") - disp[sel(n2, "shape")],
+      sel(n1, "x") + sel(n1, "boxw") / 2,
+      sel(n2, "x") - sel(n2, "boxw") / 2,
       sel(n1, "rpos"),
       sel(n2, "lpos"),
       width = edges$weight[i],
@@ -36,7 +34,7 @@ draw.edges <- function(x, nsteps = 50, boxw = 0.2) {
   }
 }
 
-draw.nodes <- function(x, width = 0.2, boxw = 0.2) {
+draw.nodes <- function(x, width = 0.2) {
 
   nodes <- vertices(x)
 
@@ -49,14 +47,24 @@ draw.nodes <- function(x, width = 0.2, boxw = 0.2) {
 
     } else if (nodes$shape[n] == "rectangle") {
       rect(
-        nodes$x[n] - boxw / 2, nodes$bottom[n],
-        nodes$x[n] + boxw / 2, nodes$top[n],
+        nodes$x[n] - nodes$boxw[n] / 2, nodes$bottom[n],
+        nodes$x[n] + nodes$boxw[n] / 2, nodes$top[n],
         lty = nodes$lty[n], col = nodes$col[n]
       )
     }
 
-    text(nodes$x[n], nodes$center[n], nodes$label[n],
-         col = nodes$textcol[n], srt = nodes$srt[n])
+    text(
+      nodes$textx[n],
+      nodes$texty[n],
+      nodes$label[n],
+      col = nodes$textcol[n],
+      srt = nodes$srt[n],
+      pos = nodes$pos[n],
+      adj = c(nodes$adjx[n], nodes$adjy[n]),
+      cex = nodes$cex[n],
+      offset = 0.2,
+      xpd = NA
+    )
   }
 }
 
@@ -74,7 +82,7 @@ plot.sankey <- function(x, ...) sankey(x, ...)
 #'
 #' @export
 
-sankey <- function(x, ...) {
+sankey <- function(x, mar = c(0, 5, 0, 5) + 0.2, ...) {
 
   plot.new()
 
@@ -86,16 +94,14 @@ sankey <- function(x, ...) {
   yrange <- range(V[, c("bottom", "top")])
   ylim <- yrange + (yrange[2] - yrange[1]) * c(-0.1, 0.1)
 
-  par(mar = c(0, 0, 0, 0) + 0.2)
+  par(mar = mar)
   par(usr = c(xlim, ylim))
 
   dev.hold()
   on.exit(dev.flush())
 
-  w <- strwidth("hjKg") * 0.75
-
-  draw.edges(x, nsteps = 50, boxw = w)
-  draw.nodes(x, boxw = w)
+  draw.edges(x, nsteps = 50)
+  draw.nodes(x)
 
   invisible()
 }

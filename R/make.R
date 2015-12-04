@@ -1,6 +1,48 @@
 
 #' Create an object that describes a sankey plot
 #'
+#' @details
+#' The node and edges data frames may contain columns that specify
+#' how the plot is created. All parameters have reasonable default
+#' values.
+#'
+#' Current list of graphical parameters for nodes:
+#' \itemize{
+#'   \item \code{col} Node color.
+#'   \item \code{size} Node size.
+#'   \item \code{x} Horizontal coordinates of the center of the node.
+#'   \item \code{y} Vertical coordinates of the center of the node.
+#'   \item \code{shape} Shape of the node. Possible values:
+#'     \code{rectangle}, \code{point}, \code{invisible}.
+#'   \item \code{lty} Lite type, see \code{par}.
+#'   \item \code{srt} How to rotate the label, see \code{par}.
+#'   \item \code{textcol} Label color.
+#'   \item \code{label} Label text. Defaults to node name.
+#'   \item \code{adjx} Horizontal adjustment of the label. See
+#'     \code{adj} in the \code{par} manual.
+#'   \item \code{adjy} Vertical adjustment of the label. See
+#'     \code{adj} in the \code{par} manual.
+#'   \item \code{boxw} Width of the node boxes.
+#'   \item \code{cex} Label size multiplication factor.
+#'   \item \code{top} Vertical coordinate of the top of the node.
+#'   \item \code{center} Vertical coordinate of the center of the node.
+#'   \item \code{bottom} Vertical coordinate of the bottom of the node.
+#'   \item \code{pos} Position of the text label, see \code{par}.
+#'   \item \code{textx} Horizontal position of the text label.
+#'   \item \code{texty} Vertical position of the text label.
+#' }
+#'
+#' Current list of graphical parameters for edges:
+#' \itemize{
+#'   \item \code{colorstyle} Whether the to use a solid color (\code{col}),
+#'     or a \code{gradient} to plot the edges. The color of a gradient
+#'     edges is between the colors of the nodes.
+#'   \item \code{curvestyle} Edge style, \code{sin} for sinusoid curves,
+#'     \code{line} for straight lines.
+#'   \item \code{col} Edge color, for edges with solid colors.
+#'   \item \code{weight} Edge weight. Determines the width of the edges.
+#' }
+#'
 #' @param nodes A data frame of nodes on the plot, and possibly
 #'   their visual style. The first column must be the ids of the
 #'   nodes. If this argument is \code{NULL}, then the ids of the
@@ -31,12 +73,22 @@ make_sankey <- function(nodes = NULL, edges) {
   nodes$srt     <- nodes$srt     %||% 0
   nodes$textcol <- nodes$textcol %||% "black"
   nodes$label   <- nodes$label   %||% nodes[,1]
+  nodes$adjx    <- nodes$adjx    %||% 1/2
+  nodes$adjy    <- nodes$adjy    %||% 1
+  nodes$boxw    <- nodes$boxw    %||% 0.2
+  nodes$cex     <- nodes$cex     %||% 0.7
 
   if (null_or_any_na(nodes$y)      ||
       null_or_any_na(nodes$top)    ||
       null_or_any_na(nodes$center) ||
       null_or_any_na(nodes$bottom)) {
     nodes <- optimize_y(nodes, edges)
+  }
+
+  if (null_or_any_na(nodes$pos)    ||
+      null_or_any_na(nodes$textx)  ||
+      null_or_any_na(nodes$texty)) {
+    nodes <- optimize_pos(nodes, edges)
   }
 
   edges$colorstyle <- edges$colorstyle %||% "col"
@@ -94,7 +146,7 @@ optimize_x <- function(nodes, edges) {
 optimize_y <- function(nodes, edges) {
 
   ## 10 percent of max total node size at a level
-  interstop <- 0.1 * max(tapply(nodes$size, nodes$x, sum))
+  interstop <- 0.3 * max(tapply(nodes$size, nodes$x, sum))
 
   nodes$center <- nodes$top <- nodes$bottom <- NA_real_
 
@@ -116,6 +168,35 @@ optimize_y <- function(nodes, edges) {
         cur_y <- cur_y - nodes$size[node] - interstop
       }
     }
+  }
+
+  nodes
+}
+
+optimize_pos <- function(nodes, edges) {
+
+  ## Middle nodes are at (center, below)
+  ## First column nodes are at (right, center)
+  ## Last column is (left, center)
+
+  first <- nodes$x == min(nodes$x)
+  last  <- nodes$x == max(nodes$x)
+
+  if (is.null(nodes$pos)) {
+    nodes$pos <- rep(1, nrow(nodes))
+    nodes$pos[first] <- 2
+    nodes$pos[last ] <- 4
+  }
+
+  if (is.null(nodes$textx) || is.null(nodes$texty)) {
+    nodes$textx <- nodes$x
+    nodes$texty <- nodes$top
+
+    nodes$textx [first] <- nodes$x[first] - nodes$boxw[first] / 2
+    nodes$texty [first] <- nodes$center[first]
+
+    nodes$textx [last]  <- nodes$x[last] + nodes$boxw[last] / 2
+    nodes$texty [last]  <- nodes$center[last]
   }
 
   nodes
