@@ -91,7 +91,7 @@ optimize_y <- function(nodes, edges) {
 
     for (node in nodes_here) {
 
-      if (! is.null(nodes$y) && ! is.na(x$nodes$y[node])) {
+      if (! is.null(nodes$y) && ! is.na(nodes$y[node])) {
         nodes$center[node] <- nodes$y[node]
         nodes$top[node]    <- nodes$y[node] + nodes$size[node] / 2
         nodes$bottom[node] <- nodes$y[node] - nodes$size[node] / 2
