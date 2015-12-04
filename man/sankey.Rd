@@ -8,8 +8,20 @@
 \title{Sankey Diagrams}
 \usage{
 \method{plot}{sankey}(x, ...)
+
+sankey(x, ...)
+}
+\arguments{
+\item{x}{The plot, created via \code{\link{make_sankey}}.}
+
+\item{...}{Additional arguments, ignored currently.}
+}
+\value{
+Nothing.
 }
 \description{
 Sankey plots illustrate the flow of information or material.
+
+Draw a sankey plot
 }
 

@@ -66,9 +66,15 @@ draw.nodes <- function(x, width = 0.2, boxw = 0.2) {
 
 plot.sankey <- function(x, ...) sankey(x, ...)
 
-#'@export
+#' Draw a sankey plot
+#'
+#' @param x The plot, created via \code{\link{make_sankey}}.
+#' @param ... Additional arguments, ignored currently.
+#' @return Nothing.
+#'
+#' @export
 
-sankey <- function(x) {
+sankey <- function(x, ...) {
 
   plot.new()
 

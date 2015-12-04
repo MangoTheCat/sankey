@@ -1,5 +1,18 @@
 
+#' Create an object that describes a sankey plot
+#'
+#' @param nodes A data frame of nodes on the plot, and possibly
+#'   their visual style. The first column must be the ids of the
+#'   nodes. If this argument is \code{NULL}, then the ids of the
+#'   nodes are determined from \code{edges}.
+#' @param edges A data frame of the edges. The first two columns
+#'   must be node ids, and they define the edges. The rest of the columns
+#'   contain the visual style of the edges.
+#' @return A \code{sankey} object that can be plotted via the
+#'   \code{\link{sankey}} function.x
+#'
 #' @importFrom simplegraph graph
+#' @export
 
 make_sankey <- function(nodes = NULL, edges) {
 
