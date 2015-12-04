@@ -91,7 +91,7 @@ make_sankey <- function(nodes = NULL, edges) {
     nodes <- optimize_pos(nodes, edges)
   }
 
-  edges$colorstyle <- edges$colorstyle %||% "col"
+  edges$colorstyle <- edges$colorstyle %||% "gradient"
   edges$curvestyle <- edges$curvestyle %||% "sin"
   edges$col        <- edges$col        %||% color_edges(nodes, edges)
   edges$weight     <- edges$weight     %||% 1

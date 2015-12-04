@@ -2,14 +2,14 @@
 #' @importFrom graphics lines polygon
 
 curveseg <- function(x0, x1, y0, y1, width =  1, nsteps = 50,
-                     col = "#ffcc0066", grad = NULL, lty = 1,
+                     colorstyle, col = "#ffcc0066", grad = NULL, lty = 1,
                      curvestyle = c("sin", "line")) {
 
   curvestyle <- match.arg(curvestyle)
 
   w <- width
 
-  if (! is.null(grad)) {
+  if (colorstyle == "gradient") {
     grad <- color_ramp_palette_alpha(grad)(nsteps)
 
   } else {

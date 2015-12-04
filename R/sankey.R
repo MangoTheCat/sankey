@@ -23,6 +23,8 @@ draw.edges <- function(x, nsteps = 50) {
       sel(n2, "x") - sel(n2, "boxw") / 2,
       sel(n1, "rpos"),
       sel(n2, "lpos"),
+      colorstyle = edges$colorstyle[i],
+      grad = c(sel(n1, "col"), sel(n2, "col")),
       width = edges$weight[i],
       col = edges$col[i],
       nsteps = nsteps,
