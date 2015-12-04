@@ -35,4 +35,4 @@ library(sankey)
 
 ## License
 
-GPL (>= 2) © [Mango Solutions](https://github.com/mangothecat).
+GPL (>= 2) © [Mango Solutions](https://github.com/mangothecat), January Weiner
