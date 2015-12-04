@@ -10,4 +10,6 @@ URL: https://github.com/mangothecat/sankey
 BugReports: https://github.com/mangothecat/sankey/issues
 Suggests:
     testthat
-RoxygenNote: 5.0.0.9000
+Imports:
+    simplegraph
+RoxygenNote: 5.0.1

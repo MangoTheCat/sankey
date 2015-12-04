@@ -12,8 +12,8 @@ knitr::opts_chunk$set(
 
 > Sankey Diagrams
 
-[![Linux Build Status](https://travis-ci.org/gaborcsardi/sankey.svg?branch=master)](https://travis-ci.org/gaborcsardi/sankey)
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/github/gaborcsardi/sankey?svg=true)](https://ci.appveyor.com/project/gaborcsardi/sankey)
+[![Linux Build Status](https://travis-ci.org/MangoTheCat/sankey.svg?branch=master)](https://travis-ci.org/MangoTheCat/sankey)
+[![Windows Build status](https://ci.appveyor.com/api/projects/status/github/MangoTheCat/sankey?svg=true)](https://ci.appveyor.com/project/gaborcsardi/sankey)
 [![](http://www.r-pkg.org/badges/version/sankey)](http://www.r-pkg.org/pkg/sankey)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/sankey)](http://www.r-pkg.org/pkg/sankey)
 

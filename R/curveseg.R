@@ -3,9 +3,9 @@
 
 curveseg <- function(x0, x1, y0, y1, width =  1, nsteps = 50,
                      col = "#ffcc0066", grad = NULL, lty = 1,
-                     form = c("sin", "line")) {
+                     curvestyle = c("sin", "line")) {
 
-  form <- match.arg(form)
+  curvestyle <- match.arg(curvestyle)
 
   w <- width
 
@@ -16,13 +16,13 @@ curveseg <- function(x0, x1, y0, y1, width =  1, nsteps = 50,
     grad <- rep(col, nsteps)
   }
 
-  if (form == "sin" ) {
+  if (curvestyle == "sin" ) {
     xx  <- seq(-pi/2, pi/2, length.out = nsteps)
     yy <- y0 + (y1 - y0) * (sin(xx) + 1 ) / 2
     xx <- seq(x0, x1, length.out= nsteps)
   }
 
-  if (form == "line" ) {
+  if (curvestyle == "line" ) {
     xx <- seq(x0, x1, length.out= nsteps)
     yy <- seq(y0, y1, length.out= nsteps)
   }
