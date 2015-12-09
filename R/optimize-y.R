@@ -27,8 +27,8 @@ optimize_y_simple <- function(nodes, edges) {
 
       if (! is.null(nodes$y) && ! is.na(nodes$y[node])) {
         nodes$center[node] <- nodes$y[node]
-        nodes$top[node]    <- nodes$y[node] + nodes$size[node] / 2
-        nodes$bottom[node] <- nodes$y[node] - nodes$size[node] / 2
+        nodes$top[node]    <- nodes$y[node] - nodes$size[node] / 2
+        nodes$bottom[node] <- nodes$y[node] + nodes$size[node] / 2
 
       } else {
         nodes$bottom[node] <- cur_y
