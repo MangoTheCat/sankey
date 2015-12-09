@@ -64,8 +64,8 @@ make_sankey <- function(nodes = NULL, edges, y = c("optimal", "simple")) {
 
   if (is.null(nodes)) {
     nodes <- data.frame(
-      stringAsFactors = FALSE,
-      id = unique(c(edges[,1], edges[,2]))
+      stringsAsFactors = FALSE,
+      id = sort(unique(c(edges[,1], edges[,2])))
     )
   }
 
