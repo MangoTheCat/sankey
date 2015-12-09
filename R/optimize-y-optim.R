@@ -9,12 +9,9 @@ optimize_y_optim <- function(nodes, edges) {
   nodes <- nodes[ base::order(nodes$x, nodes$y), ]
 
   ## And we also rewrite the y coordinates to 1:k
-  xpos <- sort(unique(nodes$x))
-  for (pos in xpos) {
-    num <- sum(nodes$x == pos)
-    nodes[nodes$x == pos, ]$y <- seq_len(num)
-  }
+  nodes <- set_integer_y(nodes)
 
+  xpos <- sort(unique(nodes$x))
   for (pos in xpos) nodes <- bubble(nodes, edges, pos)
 
   ## Need to run it again, to fix vertical space between nodes
@@ -22,6 +19,15 @@ optimize_y_optim <- function(nodes, edges) {
   nodes <- nodes[ base::order(nodes$x, nodes$y), ]
   nodes$y <- NULL
   optimize_y_simple(nodes, edges)
+}
+
+set_integer_y <- function(nodes) {
+  xpos <- sort(unique(nodes$x))
+  for (pos in xpos) {
+    num <- sum(nodes$x == pos)
+    nodes[nodes$x == pos, ]$y <- seq_len(num)
+  }
+  nodes
 }
 
 switch_nodes <- function(nodes, x, y1, y2) {
