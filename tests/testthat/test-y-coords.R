@@ -7,7 +7,7 @@ test_that("optimize_y", {
   ne$nodes$x    <- optimize_x    (ne$nodes, ne$edges)
   ne$nodes$size <- optimize_sizes(ne$nodes, ne$edges)
 
-  result <- optimize_y(ne$nodes, ne$edges)
+  result <- optimize_y_simple(ne$nodes, ne$edges)
 
   expect_equal(result[,1:3], ne$nodes)
   expect_equal(

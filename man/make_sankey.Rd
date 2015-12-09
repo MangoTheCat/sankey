@@ -4,7 +4,7 @@
 \alias{make_sankey}
 \title{Create an object that describes a sankey plot}
 \usage{
-make_sankey(nodes = NULL, edges)
+make_sankey(nodes = NULL, edges, y = c("optimal", "simple"))
 }
 \arguments{
 \item{nodes}{A data frame of nodes on the plot, and possibly
@@ -15,6 +15,11 @@ nodes are determined from \code{edges}.}
 \item{edges}{A data frame of the edges. The first two columns
 must be node ids, and they define the edges. The rest of the columns
 contain the visual style of the edges.}
+
+\item{y}{How to calculate vertical coordinates of nodes, if they
+are not given in the input. \code{optimal} tries to minimize edge
+crossings, \code{simple} simply packs nodes in the order they are
+given, from bottom to top.}
 }
 \value{
 A \code{sankey} object that can be plotted via the

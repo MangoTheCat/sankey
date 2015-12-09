@@ -6,3 +6,7 @@
 null_or_any_na <- function(x) {
   is.null(x) || any(is.na(x))
 }
+
+drop_last <- function(x) {
+  head(x, length(x) - 1)
+}
