@@ -27,3 +27,42 @@ test_that("optimize_y", {
       -12.1, -6.3, -0.5)
   )
 })
+
+test_that("optimize_y", {
+
+  ne <- nodes_edges()
+  ne$nodes$x    <- optimize_x    (ne$nodes, ne$edges)
+  ne$nodes$size <- optimize_sizes(ne$nodes, ne$edges)
+
+  result <- optimize_y(ne$nodes, ne$edges, mode = "optimal")
+  result$y <- result$center
+  result <- set_integer_y(result)
+
+  xpos <- sort(unique(result$x))
+  for (x in xpos) {
+    mynodes <- which(result$x == x)
+    for (n1 in mynodes) {
+      for (n2 in mynodes) {
+        if (n1 == n2) next;
+        e1 <- which(ne$edges[,1] == result[n1, 1])
+        e2 <- which(ne$edges[,1] == result[n2, 1])
+        expect_equal(crossing_edges(result, ne$edges, e1, e2), 0)
+      }
+    }
+  }
+})
+
+test_that("optimize_y (simple) uses supplied y coordinates", {
+
+  ne <- nodes_edges()
+  ne$nodes$x    <- optimize_x    (ne$nodes, ne$edges)
+  ne$nodes$size <- optimize_sizes(ne$nodes, ne$edges)
+
+  result <- optimize_y(ne$nodes, ne$edges, mode = "optimal")
+  result$y <- result$center
+  result <- result[ sample.int(nrow(result)), ]
+
+  result2 <- optimize_y(result, ne$edges, mode = "simple")
+
+  expect_equal(result, result2)
+})
