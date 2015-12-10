@@ -61,3 +61,16 @@ test_that("breaking edges works", {
   expect_equal(sort(names(res$nodes)), sort(names(nodes)))
   expect_equal(sort(names(res$edges)), sort(names(edges)))
 })
+
+test_that("breaking edges if requested", {
+
+  ne <- nodes_edges()
+  nodes <- ne$nodes
+  edges <- ne$edges
+
+  x <- make_sankey(nodes, edges, break_edges = TRUE)
+  expect_equal(
+    nrow(x$nodes),
+    nrow(nodes) + nrow(edges)
+  )
+})
