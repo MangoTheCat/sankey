@@ -54,13 +54,16 @@
 #'   are not given in the input. \code{optimal} tries to minimize edge
 #'   crossings, \code{simple} simply packs nodes in the order they are
 #'   given, from bottom to top.
+#' @param break_edges Whether to plot each edge as two segments,
+#'   or a single one. Sometimes two segment plots look better.
 #' @return A \code{sankey} object that can be plotted via the
 #'   \code{\link{sankey}} function.x
 #'
 #' @importFrom simplegraph graph
 #' @export
 
-make_sankey <- function(nodes = NULL, edges, y = c("optimal", "simple")) {
+make_sankey <- function(
+  nodes = NULL, edges, y = c("optimal", "simple"), break_edges = FALSE) {
 
   if (is.null(nodes)) {
     nodes <- data.frame(
@@ -69,9 +72,10 @@ make_sankey <- function(nodes = NULL, edges, y = c("optimal", "simple")) {
     )
   }
 
+  ## Easy ones first, breaking edges depend on these, so we need
+  ## to add them early
+
   nodes$col     <- nodes$col     %||% color_nodes(nodes, edges)
-  nodes$size    <- nodes$size    %||% optimize_sizes(nodes, edges)
-  nodes$x       <- nodes$x       %||% optimize_x(nodes, edges)
   nodes$shape   <- nodes$shape   %||% "rectangle"
   nodes$lty     <- nodes$lty     %||% 1
   nodes$srt     <- nodes$srt     %||% 0
@@ -81,6 +85,22 @@ make_sankey <- function(nodes = NULL, edges, y = c("optimal", "simple")) {
   nodes$adjy    <- nodes$adjy    %||% 1
   nodes$boxw    <- nodes$boxw    %||% 0.2
   nodes$cex     <- nodes$cex     %||% 0.7
+
+  edges$colorstyle <- edges$colorstyle %||% "gradient"
+  edges$curvestyle <- edges$curvestyle %||% "sin"
+  edges$col        <- edges$col        %||% color_edges(nodes, edges)
+  edges$weight     <- edges$weight     %||% 1
+
+  ## We can break the edges now
+
+  if (break_edges) {
+    ne <- do_break_edges(nodes, edges)
+    nodes <- ne$nodes
+    edges <- ne$edges
+  }
+
+  nodes$size    <- nodes$size    %||% optimize_sizes(nodes, edges)
+  nodes$x       <- nodes$x       %||% optimize_x(nodes, edges)
 
   if (null_or_any_na(nodes$y)      ||
       null_or_any_na(nodes$top)    ||
@@ -94,11 +114,6 @@ make_sankey <- function(nodes = NULL, edges, y = c("optimal", "simple")) {
       null_or_any_na(nodes$texty)) {
     nodes <- optimize_pos(nodes, edges)
   }
-
-  edges$colorstyle <- edges$colorstyle %||% "gradient"
-  edges$curvestyle <- edges$curvestyle %||% "sin"
-  edges$col        <- edges$col        %||% color_edges(nodes, edges)
-  edges$weight     <- edges$weight     %||% 1
 
   ## Reorder edges in the order of node ids, so that edges
   ## coming from the same node do not cross

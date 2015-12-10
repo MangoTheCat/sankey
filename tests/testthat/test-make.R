@@ -33,3 +33,31 @@ test_that("make_sankey handles nodes = NULL", {
 
   expect_equal(result1, result2)
 })
+
+test_that("breaking edges works", {
+
+  ne <- nodes_edges()
+  nodes <- ne$nodes
+  edges <- ne$edges
+
+  nodes$col     <- nodes$col     %||% color_nodes(nodes, edges)
+  nodes$shape   <- nodes$shape   %||% "rectangle"
+  nodes$lty     <- nodes$lty     %||% 1
+  nodes$srt     <- nodes$srt     %||% 0
+  nodes$textcol <- nodes$textcol %||% "black"
+  nodes$label   <- nodes$label   %||% nodes[,1]
+  nodes$adjx    <- nodes$adjx    %||% 1/2
+  nodes$adjy    <- nodes$adjy    %||% 1
+  nodes$boxw    <- nodes$boxw    %||% 0.2
+  nodes$cex     <- nodes$cex     %||% 0.7
+
+  edges$colorstyle <- edges$colorstyle %||% "gradient"
+  edges$curvestyle <- edges$curvestyle %||% "sin"
+  edges$col        <- edges$col        %||% color_edges(nodes, edges)
+  edges$weight     <- edges$weight     %||% 1
+
+  res <- do_break_edges(nodes, edges)
+
+  expect_equal(sort(names(res$nodes)), sort(names(nodes)))
+  expect_equal(sort(names(res$edges)), sort(names(edges)))
+})
