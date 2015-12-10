@@ -13,8 +13,8 @@ draw.edges <- function(x, nsteps = 50) {
 
   for (i in seq_len(nrow(edges))) {
 
-    n1 <- edges$from[i]
-    n2 <- edges$to[i]
+    n1 <- edges[i, 1]
+    n2 <- edges[i, 2]
 
     sel <- function(node, attr) nodes[ nodes[,1] == node, attr]
 
