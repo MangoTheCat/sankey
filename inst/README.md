@@ -28,6 +28,103 @@ devtools::install_github("mangothecat/sankey")
 library(sankey)
 ```
 
+The API of the package is very simple. You can create a `sankey` object
+with `make_sankey`, and plot it with `sankey`. `make_sankey` takes at
+least one data frame that defines the edges of the plot. This should be a
+data frame, with the starting points of the edges in the first column,
+and the end point of the edges in the second column. Both must character
+vectors.
+
+Here is a simple example that shows function calls in the
+[pkgsnap](https://github.com/mangothecat/pkgsnap) package:
+
+
+```r
+edges <- read.table(stringsAsFactors = FALSE, textConnection(
+"                get_deps          get_description
+                 get_deps               parse_deps
+                 get_deps                     %||%
+                 get_deps            drop_internal
+          get_description        pkg_from_filename
+               parse_deps                 str_trim
+                cran_file             get_pkg_type
+                cran_file          r_minor_version
+            download_urls split_pkg_names_versions
+            download_urls                cran_file
+             pkg_download               dir_exists
+             pkg_download            download_urls
+             pkg_download        filename_from_url
+             pkg_download             try_download
+                  restore             pkg_download
+                  restore        drop_missing_deps
+                  restore            install_order
+                  restore                 get_deps
+ split_pkg_names_versions               data_frame
+"))
+pkgsnap_sankey <- make_sankey(edges = edges)
+sankey(pkgsnap_sankey)
+```
+
+![plot of chunk unnamed-chunk-3](inst/figure/unnamed-chunk-3-1.png) 
+
+## Customization
+
+Several properties of the plot can be customized by setting extra columns
+in the data frame that define the edges, or another data frame, that
+defines the nodes.
+
+Current list of graphical parameters for edges:
+ *  `colorstyle` Whether the to use a solid color (`col`),
+    or `gradient` to plot the edges. The color of a gradient
+    edges is between the colors of the nodes.
+ *  `curvestyle` Edge style, `sin` for sinusoid curves,
+    `line` for straight lines.
+ *  `col` Edge color, for edges with solid colors.
+ *  `weight` Edge weight. Determines the width of the edges.
+
+Current list of graphical parameters for nodes:
+ *  `col` Node color.
+ *  `size` Node size.
+ *  `x` Horizontal coordinates of the center of the node.
+ *  `y` Vertical coordinates of the center of the node.
+ *  `shape` Shape of the node. Possible values:
+    `rectangle`, `point`, `invisible`.
+ *  `lty` Lite type, see `par`.
+ *  `srt` How to rotate the label, see `par`.
+ *  `textcol` Label color.
+ *  `label` Label text. Defaults to node name.
+ *  `adjx` Horizontal adjustment of the label. See
+    `adj` in the `par` manual.
+ *  `adjy` Vertical adjustment of the label. See
+    `adj` in the `par` manual.
+ *  `boxw` Width of the node boxes.
+ *  `cex` Label size multiplication factor.
+ *  `top` Vertical coordinate of the top of the node.
+ *  `center` Vertical coordinate of the center of the node.
+ *  `bottom` Vertical coordinate of the bottom of the node.
+ *  `pos` Position of the text label, see `par`.
+ *  `textx` Horizontal position of the text label.
+ *  `texty` Vertical position of the text label.
+
+Here is the same plot again, with some customization.
+
+
+```r
+nodes <- data.frame(
+  stringsAsFactors = FALSE,
+  id = c("snap", sort(unique(c(edges[,1], edges[,2]))))
+)
+nodes$col <- ifelse(nodes$id %in% c("snap", "restore"), "orange", "#2ca25f")
+edges$colorstyle <- "gradient"
+
+sankey(make_sankey(nodes, edges))
+```
+
+![plot of chunk unnamed-chunk-4](inst/figure/unnamed-chunk-4-1.png) 
+
+We colored the nodes of the exported functions orange, and also added
+a color gradient along the edges.
+
 ## License
 
 GPL (>= 2) © [Mango Solutions](https://github.com/mangothecat), January Weiner
