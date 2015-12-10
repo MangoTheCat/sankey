@@ -75,21 +75,21 @@ make_sankey <- function(
   ## Easy ones first, breaking edges depend on these, so we need
   ## to add them early
 
-  nodes$col     <- nodes$col     %||% color_nodes(nodes, edges)
-  nodes$shape   <- nodes$shape   %||% "rectangle"
-  nodes$lty     <- nodes$lty     %||% 1
-  nodes$srt     <- nodes$srt     %||% 0
-  nodes$textcol <- nodes$textcol %||% "black"
-  nodes$label   <- nodes$label   %||% nodes[,1]
-  nodes$adjx    <- nodes$adjx    %||% 1/2
-  nodes$adjy    <- nodes$adjy    %||% 1
-  nodes$boxw    <- nodes$boxw    %||% 0.2
-  nodes$cex     <- nodes$cex     %||% 0.7
+  nodes[["col"]]     <- nodes[["col"]]     %||% color_nodes(nodes, edges)
+  nodes[["shape"]]   <- nodes[["shape"]]   %||% "rectangle"
+  nodes[["lty"]]     <- nodes[["lty"]]     %||% 1
+  nodes[["srt"]]     <- nodes[["srt"]]     %||% 0
+  nodes[["textcol"]] <- nodes[["textcol"]] %||% "black"
+  nodes[["label"]]   <- nodes[["label"]]   %||% nodes[,1]
+  nodes[["adjx"]]    <- nodes[["adjx"]]    %||% 1/2
+  nodes[["adjy"]]    <- nodes[["adjy"]]    %||% 1
+  nodes[["boxw"]]    <- nodes[["boxw"]]    %||% 0.2
+  nodes[["cex"]]     <- nodes[["cex"]]     %||% 0.7
 
-  edges$colorstyle <- edges$colorstyle %||% "gradient"
-  edges$curvestyle <- edges$curvestyle %||% "sin"
-  edges$col        <- edges$col        %||% color_edges(nodes, edges)
-  edges$weight     <- edges$weight     %||% 1
+  edges[["colorstyle"]] <- edges[["colorstyle"]] %||% "gradient"
+  edges[["curvestyle"]] <- edges[["curvestyle"]] %||% "sin"
+  edges[["col"]]        <- edges[["col"]]        %||% color_edges(nodes, edges)
+  edges[["weight"]]     <- edges[["weight"]]     %||% 1
 
   ## We can break the edges now
 
@@ -99,19 +99,19 @@ make_sankey <- function(
     edges <- ne$edges
   }
 
-  nodes$size    <- nodes$size    %||% optimize_sizes(nodes, edges)
-  nodes$x       <- nodes$x       %||% optimize_x(nodes, edges)
+  nodes[["size"]]    <- nodes[["size"]]    %||% optimize_sizes(nodes, edges)
+  nodes[["x"]]       <- nodes[["x"]]       %||% optimize_x(nodes, edges)
 
-  if (null_or_any_na(nodes$y)      ||
-      null_or_any_na(nodes$top)    ||
-      null_or_any_na(nodes$center) ||
-      null_or_any_na(nodes$bottom)) {
+  if (null_or_any_na(nodes[["y"]])      ||
+      null_or_any_na(nodes[["top"]])    ||
+      null_or_any_na(nodes[["center"]]) ||
+      null_or_any_na(nodes[["bottom"]])) {
     nodes <- optimize_y(nodes, edges, mode = y)
   }
 
-  if (null_or_any_na(nodes$pos)    ||
-      null_or_any_na(nodes$textx)  ||
-      null_or_any_na(nodes$texty)) {
+  if (null_or_any_na(nodes[["pos"]])    ||
+      null_or_any_na(nodes[["textx"]])  ||
+      null_or_any_na(nodes[["texty"]])) {
     nodes <- optimize_pos(nodes, edges)
   }
 
