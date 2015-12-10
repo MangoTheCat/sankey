@@ -4,7 +4,8 @@
 \alias{make_sankey}
 \title{Create an object that describes a sankey plot}
 \usage{
-make_sankey(nodes = NULL, edges, y = c("optimal", "simple"))
+make_sankey(nodes = NULL, edges, y = c("optimal", "simple"),
+  break_edges = FALSE)
 }
 \arguments{
 \item{nodes}{A data frame of nodes on the plot, and possibly
@@ -20,6 +21,9 @@ contain the visual style of the edges.}
 are not given in the input. \code{optimal} tries to minimize edge
 crossings, \code{simple} simply packs nodes in the order they are
 given, from bottom to top.}
+
+\item{break_edges}{Whether to plot each edge as two segments,
+or a single one. Sometimes two segment plots look better.}
 }
 \value{
 A \code{sankey} object that can be plotted via the
