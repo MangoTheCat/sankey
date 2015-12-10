@@ -10,7 +10,7 @@ before_install:
   - ./pkg-build.sh bootstrap
 
 install:
-  - ./pkg-build.sh install_github mangothecat/simplegraph
+  - ./pkg-build.sh install_github MangoTheCat/simplegraph
   - ./pkg-build.sh install_deps
   - ./pkg-build.sh install_github jimhester/covr
 
