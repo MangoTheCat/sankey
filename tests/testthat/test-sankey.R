@@ -11,4 +11,30 @@ test_that("sankey plots nicely", {
   png(tmp <- tempfile())
   sankey(x)
   dev.off()
+
+  expect_true(TRUE)
+})
+
+test_that("plot.sankey plots nicely", {
+
+  ne <- nodes_edges()
+  x <- make_sankey(ne$nodes, ne$edges, break_edges = FALSE)
+  png(tmp <- tempfile())
+  plot(x)
+  dev.off()
+
+  expect_true(TRUE)
+})
+
+test_that("sankey plots with points as nodes", {
+
+  ne <- nodes_edges()
+  ne$nodes$shape <- "point"
+
+  x <- make_sankey(ne$nodes, ne$edges, break_edges = FALSE)
+  png(tmp <- tempfile())
+  plot(x)
+  dev.off()
+
+  expect_true(TRUE)
 })

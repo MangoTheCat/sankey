@@ -25,4 +25,13 @@ test_that("curve_seg is good", {
 
   expect_equal(mypolygon_func(), 50)
   expect_equal(mylines_func(),   99)
+
+  with_mock(
+    `graphics::polygon` = mypolygon_func <- mypolygon(),
+    `graphics::lines`   = mylines_func   <- mylines(),
+    curveseg(0, 0, 1, 1, colorstyle = "color", curvestyle = "line")
+  )
+
+  expect_equal(mypolygon_func(), 50)
+  expect_equal(mylines_func(),   99)
 })

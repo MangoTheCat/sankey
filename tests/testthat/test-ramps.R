@@ -16,6 +16,14 @@ test_that("color_ramp_alpha is ok", {
   expect_equal(r2[,4], rep(255, 5))
 })
 
+test_that("color_ramp_alpha with single color", {
+  r <- color_ramp_alpha ("red")(0:3 / 3)
+  expect_equal(r[,1], rep(255, 4))
+  expect_equal(r[,2], rep(0, 4))
+  expect_equal(r[,3], rep(0, 4))
+  expect_equal(r[,4], rep(255, 4))
+})
+
 test_that("color_ramp_palette_alpha is ok", {
 
   p1 <- colorRampPalette(c("blue", "red"))(4)
