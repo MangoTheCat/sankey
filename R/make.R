@@ -35,7 +35,7 @@
 #' Current list of graphical parameters for edges:
 #' \itemize{
 #'   \item \code{colorstyle} Whether the to use a solid color (\code{col}),
-#'     or a \code{gradient} to plot the edges. The color of a gradient
+#'     or \code{gradient} to plot the edges. The color of a gradient
 #'     edges is between the colors of the nodes.
 #'   \item \code{curvestyle} Edge style, \code{sin} for sinusoid curves,
 #'     \code{line} for straight lines.
