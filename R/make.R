@@ -142,7 +142,7 @@ optimize_sizes <- function(nodes, edges) {
   lefts  <- vapply(predecessors(sgraph), length, 1L)
   rights <- vapply(successors(sgraph), length, 1L)
 
-  pmax(lefts, rights)
+  pmax(pmax(lefts, rights), 1)
 }
 
 optimize_pos <- function(nodes, edges) {
