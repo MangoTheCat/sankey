@@ -122,7 +122,9 @@ make_sankey <- function(
   edges <- edges[ base::order(node_order[match(edges[,1], node_ids)],
                               node_order[match(edges[,2], node_ids)]), ]
 
-  graph(nodes, edges)
+  res <- graph(nodes, edges)
+  class(res) <- c("sankey", class(res))
+  res
 }
 
 color_edges <- function(nodes, edges) {
