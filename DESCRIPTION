@@ -11,5 +11,8 @@ BugReports: https://github.com/mangothecat/sankey/issues
 Suggests:
     testthat
 Imports:
-    simplegraph
+    simplegraph,
+    utils,
+    graphics,
+    grDevices
 RoxygenNote: 5.0.1

@@ -36,6 +36,8 @@ draw.edges <- function(x, nsteps = 50) {
   }
 }
 
+#' @importFrom graphics points rect text
+
 draw.nodes <- function(x, width = 0.2) {
 
   nodes <- vertices(x)
@@ -85,6 +87,8 @@ plot.sankey <- function(x, ...) sankey(x, ...)
 #' @return Nothing.
 #'
 #' @export
+#' @importFrom graphics par plot.new
+#' @importFrom grDevices dev.hold dev.flush
 
 sankey <- function(x, mar = c(0, 5, 0, 5) + 0.2, ...) {
 

@@ -1,4 +1,6 @@
 
+#' @importFrom rDevices rgb
+
 color_ramp_palette_alpha <- function (colors, ...) {
   ramp <- color_ramp_alpha(colors, ...)
   function(n) {
