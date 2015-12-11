@@ -149,6 +149,6 @@ test_that("optimize_y_optim", {
 
   data <- y_optim_data2()
 
-  res <- optimize_y_optim(data$nodes, data$edges)
+  res <- optimize_y_optim(data$nodes, data$edges, gravity = "top")
 
 })

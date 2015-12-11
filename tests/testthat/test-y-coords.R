@@ -34,7 +34,7 @@ test_that("optimize_y", {
   ne$nodes$x    <- optimize_x    (ne$nodes, ne$edges)
   ne$nodes$size <- optimize_sizes(ne$nodes, ne$edges)
 
-  result <- optimize_y(ne$nodes, ne$edges, mode = "optimal")
+  result <- optimize_y(ne$nodes, ne$edges, mode = "optimal", gravity = "top")
   result$y <- result$center
   result <- set_integer_y(result)
 
@@ -58,11 +58,22 @@ test_that("optimize_y (simple) uses supplied y coordinates", {
   ne$nodes$x    <- optimize_x    (ne$nodes, ne$edges)
   ne$nodes$size <- optimize_sizes(ne$nodes, ne$edges)
 
-  result <- optimize_y(ne$nodes, ne$edges, mode = "optimal")
+  result <- optimize_y(
+    ne$nodes,
+    ne$edges,
+    mode = "optimal",
+    gravity = "top"
+  )
   result$y <- result$center
+
   result <- result[ sample.int(nrow(result)), ]
 
-  result2 <- optimize_y(result, ne$edges, mode = "simple")
+  result2 <- optimize_y(
+    result,
+    ne$edges,
+    mode = "simple",
+    gravity = "top"
+  )
 
   expect_equal(result, result2)
 })

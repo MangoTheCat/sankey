@@ -1,8 +1,8 @@
 
-optimize_y_optim <- function(nodes, edges) {
+optimize_y_optim <- function(nodes, edges, gravity) {
 
   ## Starting state
-  nodes <- optimize_y_simple(nodes, edges)
+  nodes <- optimize_y_simple(nodes, edges, gravity = gravity)
   nodes$y <- nodes$center
 
   ## But reorder nodes according to their x and then y coords
@@ -18,7 +18,7 @@ optimize_y_optim <- function(nodes, edges) {
   ## But first reorder the nodes in good order
   nodes <- nodes[ base::order(nodes$x, nodes$y), ]
   nodes$y <- NULL
-  optimize_y_simple(nodes, edges)
+  optimize_y_simple(nodes, edges, gravity = gravity)
 }
 
 set_integer_y <- function(nodes) {

@@ -56,6 +56,8 @@
 #'   given, from bottom to top.
 #' @param break_edges Whether to plot each edge as two segments,
 #'   or a single one. Sometimes two segment plots look better.
+#' @param gravity Whether to push the nodes to the top, to the bottom
+#'   or to the center, within a column.
 #' @return A \code{sankey} object that can be plotted via the
 #'   \code{\link{sankey}} function.x
 #'
@@ -63,8 +65,12 @@
 #' @export
 
 make_sankey <- function(
-  nodes = NULL, edges, y = c("optimal", "simple"), break_edges = FALSE) {
+  nodes = NULL, edges, y = c("optimal", "simple"), break_edges = FALSE,
+  gravity = c("center", "top", "bottom")) {
 
+  y <- match.arg(y)
+  gravity <- match.arg(gravity)
+  
   if (is.null(nodes)) {
     nodes <- data.frame(
       stringsAsFactors = FALSE,
@@ -105,7 +111,7 @@ make_sankey <- function(
       null_or_any_na(nodes[["top"]])    ||
       null_or_any_na(nodes[["center"]]) ||
       null_or_any_na(nodes[["bottom"]])) {
-    nodes <- optimize_y(nodes, edges, mode = y)
+    nodes <- optimize_y(nodes, edges, mode = y, gravity = gravity)
   }
 
   if (null_or_any_na(nodes[["pos"]])    ||

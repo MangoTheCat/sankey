@@ -51,7 +51,7 @@ test_that("better optimizing edge placement", {
     to   = c("F", "G", "C", "D", "E", "F", "G")
   )
 
-  x <- make_sankey(nodes, edges, break_edges = TRUE)
+  x <- make_sankey(nodes, edges, break_edges = TRUE, gravity = "center")
   png(tmp <- tempfile())
   plot(x)
   dev.off()

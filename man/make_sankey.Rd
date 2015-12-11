@@ -5,7 +5,7 @@
 \title{Create an object that describes a sankey plot}
 \usage{
 make_sankey(nodes = NULL, edges, y = c("optimal", "simple"),
-  break_edges = FALSE)
+  break_edges = FALSE, gravity = c("center", "top", "bottom"))
 }
 \arguments{
 \item{nodes}{A data frame of nodes on the plot, and possibly
@@ -24,6 +24,9 @@ given, from bottom to top.}
 
 \item{break_edges}{Whether to plot each edge as two segments,
 or a single one. Sometimes two segment plots look better.}
+
+\item{gravity}{Whether to push the nodes to the top, to the bottom
+or to the center, within a column.}
 }
 \value{
 A \code{sankey} object that can be plotted via the
