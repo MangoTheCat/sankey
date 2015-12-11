@@ -1,4 +1,17 @@
 
+optimal_edge_order <- function(nodes, edges) {
+
+  sel <- function(x, attr) nodes[ match(x, nodes[,1]), attr]
+
+  left_x  <- sel(edges[,1], "x")
+  right_x <- sel(edges[,2], "x")
+
+  left_y  <- sel(edges[,1], "center")
+  right_y <- sel(edges[,2], "center")
+
+  base::order(-left_x, right_y, right_x)
+}
+
 #' @importFrom simplegraph vertices edges strength
 
 draw.edges <- function(x, nsteps = 50) {
@@ -11,7 +24,9 @@ draw.edges <- function(x, nsteps = 50) {
   nodes$lpos <- nodes$center - strength(x, mode = "in")  / 2
   nodes$rpos <- nodes$center - strength(x, mode = "out") / 2
 
-  for (i in seq_len(nrow(edges))) {
+  edge_order <- optimal_edge_order(nodes, edges)
+
+  for (i in edge_order) {
 
     n1 <- edges[i, 1]
     n2 <- edges[i, 2]
@@ -97,9 +112,9 @@ sankey <- function(x, mar = c(0, 5, 0, 5) + 0.2, ...) {
   V <- vertices(x)
   E <- edges(x)
 
-  xrange <- range(V$x)
+  xrange <- range(V$x, na.rm = TRUE)
   xlim <- xrange + (xrange[2] - xrange[1]) * c(-0.1, 0.1)
-  yrange <- range(V[, c("bottom", "top")])
+  yrange <- range(V[, c("bottom", "top")], na.rm = TRUE)
   ylim <- yrange + (yrange[2] - yrange[1]) * c(-0.1, 0.1)
 
   par(mar = mar)

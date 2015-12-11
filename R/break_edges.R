@@ -5,26 +5,34 @@
 
 do_break_edges <- function(nodes, edges) {
 
+  sel <- function(id, attr) nodes[match(id, nodes[,1]), attr]
+
+  to_break <- which(sel(edges[,2], "x") - sel(edges[,1], "x") > 1)
+
   ## Color of new nodes is the mean of the two incident nodes
-  col1 <- nodes$col[match(edges[,1], nodes[,1])]
-  col2 <- nodes$col[match(edges[,2], nodes[,1])]
+  col1 <- sel(edges[to_break, 1], "col")
+  col2 <- sel(edges[to_break, 2], "col")
   col <- mean_colors(col1, col2)
 
   new_nodes <- data.frame(
     stringsAsFactors = FALSE,
-    id = make.unique(paste(edges[,1], sep = "-", edges[,2]), sep = "_"),
+    id = make.unique(
+      paste(edges[to_break, 1], sep = "-", edges[to_break, 2]), sep = "_"
+    ),
+    x = (sel(edges[to_break, 1], "x") + sel(edges[to_break, 2], "x")) / 2,
     label = "",
+    size = 1,
     shape = "invisible",
     boxw = 0,
     col = col
   )
   names(new_nodes)[1] <- names(nodes)[1]
 
-  edges1 <- edges2 <- edges
-  edges1[,2] <- new_nodes[,1]
+  edges2 <- edges[to_break, ]
+  edges[to_break, 2] <- new_nodes[,1]
   edges2[,1] <- new_nodes[,1]
 
-  edges <- rbind(edges1, edges2)
+  edges <- rbind(edges, edges2)
   nodes <- merge(nodes, new_nodes, all = TRUE)
 
   list(nodes = nodes, edges = edges)

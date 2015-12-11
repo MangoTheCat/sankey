@@ -50,6 +50,8 @@ test_that("breaking edges works", {
   nodes$adjy    <- nodes$adjy    %||% 1
   nodes$boxw    <- nodes$boxw    %||% 0.2
   nodes$cex     <- nodes$cex     %||% 0.7
+  nodes$size    <- nodes$size    %||% optimize_sizes(nodes, edges)
+  nodes$x       <- nodes$x       %||% optimize_x(nodes, edges)
 
   edges$colorstyle <- edges$colorstyle %||% "gradient"
   edges$curvestyle <- edges$curvestyle %||% "sin"
@@ -71,6 +73,7 @@ test_that("breaking edges if requested", {
   x <- make_sankey(nodes, edges, break_edges = TRUE)
   expect_equal(
     nrow(x$nodes),
-    nrow(nodes) + nrow(edges)
+    nrow(nodes) + 1
   )
+
 })

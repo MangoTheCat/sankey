@@ -38,3 +38,23 @@ test_that("sankey plots with points as nodes", {
 
   expect_true(TRUE)
 })
+
+test_that("better optimizing edge placement", {
+
+  nodes <- data.frame(
+    stringsAsFactors = FALSE,
+    name = c("A", "B", "C", "D", "E", "F", "G")
+  )
+  edges <- data.frame(
+    stringsAsFactors = FALSE,
+    from = c("B", "B", "B", "B", "B", "D", "D"),
+    to   = c("F", "G", "C", "D", "E", "F", "G")
+  )
+
+  x <- make_sankey(nodes, edges, break_edges = TRUE)
+  png(tmp <- tempfile())
+  plot(x)
+  dev.off()
+
+  expect_true(TRUE)
+})

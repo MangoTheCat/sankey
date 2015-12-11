@@ -91,16 +91,15 @@ make_sankey <- function(
   edges[["col"]]        <- edges[["col"]]        %||% color_edges(nodes, edges)
   edges[["weight"]]     <- edges[["weight"]]     %||% 1
 
-  ## We can break the edges now
+  nodes[["size"]]    <- nodes[["size"]]    %||% optimize_sizes(nodes, edges)
+  nodes[["x"]]       <- nodes[["x"]]       %||% optimize_x(nodes, edges)
 
+  ## We can break the edges now
   if (break_edges) {
     ne <- do_break_edges(nodes, edges)
     nodes <- ne$nodes
     edges <- ne$edges
   }
-
-  nodes[["size"]]    <- nodes[["size"]]    %||% optimize_sizes(nodes, edges)
-  nodes[["x"]]       <- nodes[["x"]]       %||% optimize_x(nodes, edges)
 
   if (null_or_any_na(nodes[["y"]])      ||
       null_or_any_na(nodes[["top"]])    ||
