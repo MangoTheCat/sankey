@@ -9,6 +9,8 @@ do_break_edges <- function(nodes, edges) {
 
   to_break <- which(sel(edges[,2], "x") - sel(edges[,1], "x") > 1)
 
+  if (length(to_break) == 0) return(list(nodes = nodes, edges = edges))
+
   ## Color of new nodes is the mean of the two incident nodes
   col1 <- sel(edges[to_break, 1], "col")
   col2 <- sel(edges[to_break, 2], "col")
