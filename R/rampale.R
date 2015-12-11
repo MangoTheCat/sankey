@@ -1,5 +1,5 @@
 
-#' @importFrom rDevices rgb
+#' @importFrom grDevices rgb
 
 color_ramp_palette_alpha <- function (colors, ...) {
   ramp <- color_ramp_alpha(colors, ...)
