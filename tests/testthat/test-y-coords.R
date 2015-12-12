@@ -77,3 +77,16 @@ test_that("optimize_y (simple) uses supplied y coordinates", {
 
   expect_equal(result, result2)
 })
+
+test_that("optomize_y (simple) top, bottom and center", {
+
+  ne <- nodes_edges()
+  ne$nodes$x    <- optimize_x    (ne$nodes, ne$edges)
+  ne$nodes$size <- optimize_sizes(ne$nodes, ne$edges)
+
+  top <- optimize_y_simple(ne$nodes, ne$edges, gravity = "top")
+  cen <- optimize_y_simple(ne$nodes, ne$edges, gravity = "center")
+  bot <- optimize_y_simple(ne$nodes, ne$edges, gravity = "bottom")
+
+  ## TODO: how to test these?
+})

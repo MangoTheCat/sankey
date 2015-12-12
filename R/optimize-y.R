@@ -73,9 +73,9 @@ optimize_y_simple_bottom <- function(nodes, interstop) {
         nodes$bottom[node] <- nodes$y[node] + nodes$size[node] / 2
 
       } else {
-        nodes$bottom[node] <- cur_y
+        nodes$top   [node] <- cur_y
         nodes$center[node] <- cur_y + nodes$size[node] / 2
-        nodes$top   [node] <- cur_y + nodes$size[node]
+        nodes$bottom[node] <- cur_y + nodes$size[node]
         cur_y <- cur_y + nodes$size[node] + interstop
       }
     }
@@ -100,9 +100,9 @@ optimize_y_simple_center <- function(nodes, interstop) {
 
       } else {
         nodes$bottom[node] <- cur_y
-        nodes$center[node] <- cur_y + nodes$size[node] / 2
-        nodes$top   [node] <- cur_y + nodes$size[node]
-        cur_y <- cur_y + nodes$size[node] + interstop
+        nodes$center[node] <- cur_y - nodes$size[node] / 2
+        nodes$top   [node] <- cur_y - nodes$size[node]
+        cur_y <- cur_y - nodes$size[node] - interstop
       }
     }
   }
@@ -116,7 +116,7 @@ optimize_y_simple_center <- function(nodes, interstop) {
     dy_here   <- ylim_here[2] - ylim_here[1]
 
     nodes[nodes_here, c("bottom", "center", "top")] <-
-      nodes[nodes_here, c("bottom", "center", "top")] + (dy - dy_here) / 2
+      nodes[nodes_here, c("bottom", "center", "top")] - (dy - dy_here) / 2
   }
 
   nodes
