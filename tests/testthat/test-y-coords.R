@@ -62,7 +62,7 @@ test_that("optimize_y (simple) uses supplied y coordinates", {
     ne$nodes,
     ne$edges,
     mode = "optimal",
-    gravity = "top"
+    gravity = "center"
   )
   result$y <- result$center
 
@@ -76,6 +76,24 @@ test_that("optimize_y (simple) uses supplied y coordinates", {
   )
 
   expect_equal(result, result2)
+
+  result3 <- optimize_y(
+    result,
+    ne$edges,
+    mode = "simple",
+    gravity = "bottom"
+  )
+
+  expect_equal(result, result3)
+
+  result4 <- optimize_y(
+    result,
+    ne$edges,
+    mode = "simple",
+    gravity = "center"
+  )
+
+  expect_equal(result, result4)
 })
 
 test_that("optomize_y (simple) top, bottom and center", {

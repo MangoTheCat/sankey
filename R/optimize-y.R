@@ -115,8 +115,11 @@ optimize_y_simple_center <- function(nodes, interstop) {
     ylim_here <- range(nodes[nodes_here, c("bottom", "top")])
     dy_here   <- ylim_here[2] - ylim_here[1]
 
-    nodes[nodes_here, c("bottom", "center", "top")] <-
-      nodes[nodes_here, c("bottom", "center", "top")] - (dy - dy_here) / 2
+    ## Only center if it is not centered
+    if ( sum(ylim_here) != sum(ylim) ) {
+      nodes[nodes_here, c("bottom", "center", "top")] <-
+        nodes[nodes_here, c("bottom", "center", "top")] - (dy - dy_here) / 2
+    }
   }
 
   nodes
