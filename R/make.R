@@ -146,8 +146,8 @@ optimize_sizes <- function(nodes, edges) {
 
   sgraph <- graph(nodes, edges)
 
-  lefts  <- vapply(predecessors(sgraph), length, 1L)
-  rights <- vapply(successors(sgraph), length, 1L)
+  lefts  <- strength(sgraph, mode = "in")
+  rights <- strength(sgraph, mode = "out")
 
   pmax(pmax(lefts, rights), 1)
 }
